@@ -29,12 +29,20 @@ module Xcov
 
       begin
         message = Slack::Notifier::Util::LinkFormatter.format(Xcov.config[:slack_message])
-        results = notifier.ping(
-          message,
-          icon_url: 'https://s3-eu-west-1.amazonaws.com/fastlane.tools/fastlane.png',
-          attachments: attachments
-        )
-
+        slackIconUrl = Slack::Notifier::Util::LinkFormatter.format(Xcov.config[:slack_icon_url])
+        if slackIconUrl.empty?
+          results = notifier.ping(
+            message,
+            icon_url: 'https://s3-eu-west-1.amazonaws.com/fastlane.tools/fastlane.png',
+            attachments: attachments
+          )
+        else
+          results = notifier.ping(
+            message,
+            icon_url: slackIconUrl,
+            attachments: attachments
+          )
+        end
         if !results.first.nil? && results.first.code.to_i == 200
           UI.message 'Successfully sent Slack notification'.green
         else

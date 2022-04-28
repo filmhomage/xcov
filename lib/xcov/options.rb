@@ -192,6 +192,12 @@ module Xcov
           default_value: "Your *xcov* coverage report",
           optional: true
         ),
+        FastlaneCore::ConfigItem.new(
+          key: :slack_icon_url,
+          description: "The icon url which is published together with a successful report",
+          default_value: "Your *xcov* coverage report",
+          optional: true
+        ),
 
         # Exclusion options
         FastlaneCore::ConfigItem.new(
