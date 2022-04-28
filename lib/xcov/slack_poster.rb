@@ -19,12 +19,23 @@ module Xcov
 
       attachments = []
 
-      report.targets.each do |target|
-        attachments << {
-          text: "#{target.name}: #{target.displayable_coverage}",
-          color: target.coverage_color,
-          short: true
-        }
+      slackCustomTargetName = Slack::Notifier::Util::LinkFormatter.format(Xcov.config[:slack_custom_target_name])
+      if slackCustomTargetName.empty?
+        report.targets.each do |target|
+          attachments << {
+            text: "#{target.name}: #{target.displayable_coverage}",
+            color: target.coverage_color,
+            short: true
+          }
+        end
+      else
+        report.targets.each do |target|
+          attachments << {
+            text: "#{slackCustomTargetName}: #{target.displayable_coverage}",
+            color: target.coverage_color,
+            short: true
+          }
+        end
       end
 
       begin

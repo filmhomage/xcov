@@ -198,6 +198,12 @@ module Xcov
           default_value: "Your *xcov* coverage report",
           optional: true
         ),
+        FastlaneCore::ConfigItem.new(
+          key: :slack_custom_target_name,
+          description: "The custom target name which is published together with a successful report",
+          default_value: "Your *xcov* coverage report",
+          optional: true
+        ),
 
         # Exclusion options
         FastlaneCore::ConfigItem.new(
